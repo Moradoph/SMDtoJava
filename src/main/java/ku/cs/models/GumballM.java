@@ -1,3 +1,8 @@
+/**
+ * StudentID: 6510450861
+ * Name: Moradop Hengprasert
+ */
+
 package ku.cs.models;
 
 public class GumballM {
@@ -17,14 +22,15 @@ public class GumballM {
     public void insertQuarter() {
         if (this.gumball == 0) {
             System.out.println("You can't insert a quarter, the machine is sold out");
-        } else {
-            if (currentState == noQuarter) {
-                System.out.println("You inserted a quarter");
-                this.quarter += 1;
-                currentState = hasQuarter;
-            }
+        } else if (currentState == noQuarter) {
+            System.out.println("You inserted a quarter");
+            this.quarter += 1;
+            currentState = hasQuarter;
+        } else if (currentState == hasQuarter) {
+            System.out.println("You can't insert another quarter");
         }
     }
+
 
     public void ejectsQuarter() {
         if (currentState == hasQuarter) {
@@ -43,6 +49,9 @@ public class GumballM {
             if (currentState == noQuarter) {
                 System.out.println("You turned but there's no quarter");
             }
+            if (currentState == outOfGumball) {
+                System.out.println("You turned, but there are no gumball");
+            }
         }
     }
 
@@ -51,26 +60,26 @@ public class GumballM {
             if (gumball > 0) {
                 System.out.println("A gumball comes rolling out the slot");
                 this.gumball -= 1;
+                currentState = noQuarter;
                 if (this.gumball == 0) {
                     System.out.println("Oops, out of gumballs!");
-                }
-                currentState = noQuarter;
-
-            } else {
-                if (gumball == 0) {
-                    System.out.println("ou turned, but there are no gumballs");
                     currentState = outOfGumball;
-                };
+                }
             }
         }
     }
 
     public void log() {
+        System.out.println();
         System.out.println("Mighty Gumball, Inc.");
         System.out.println("Java-enabled Standing Gumball Model #2004");
         System.out.println("Inventory: " + this.getGumball() + " gumballs");
-        System.out.println("Machine is waiting for quarter");
-        System.out.print("\n");
+        if (this.gumball <= 0) {
+            System.out.println("Machine is sold out");
+        } else {
+            System.out.println("Machine is waiting for quarter");
+        }
+        System.out.println();
     }
     public int getGumball() {
         return this.gumball;
