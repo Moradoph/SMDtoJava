@@ -23,12 +23,16 @@ public class HasQuarterState implements State{
         gumballM.setState(gumballM.getNoQuarterState());
     }
     public void turnCrank() {
-        System.out.println("You turned...");
-        int winner = randomWinner.nextInt(10);
-        if ((winner == 0) && (gumballM.getGumball() > 1)) {
-            gumballM.setState(gumballM.getWinnerState());
+        if (gumballM.getChosenFlavor() == null) {
+            System.out.println("You have to choose the flavor first");
         } else {
-            gumballM.setState(gumballM.getSoldState());
+            System.out.println("You turned...");
+            int winner = randomWinner.nextInt(10);
+            if ((winner == 0) && (gumballM.getGumball() > 1)) {
+                gumballM.setState(gumballM.getWinnerState());
+            } else {
+                gumballM.setState(gumballM.getSoldState());
+            }
         }
     }
     public void dispense() {

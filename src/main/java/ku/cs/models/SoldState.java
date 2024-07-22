@@ -24,6 +24,7 @@ public class SoldState implements State{
     }
     public void dispense() {
         gumballM.releaseBall();
+        gumballM.setChosenFlavor(null);
         if (gumballM.getGumball() > 0) {
             gumballM.setState(gumballM.getNoQuarterState());
         } else {

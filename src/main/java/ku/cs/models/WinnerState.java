@@ -32,6 +32,7 @@ public class WinnerState implements State {
             gumballM.setState(gumballM.getSoldOutState());
         } else {
             gumballM.releaseBall();
+            gumballM.setChosenFlavor(null);
             if (gumballM.getGumball() > 0) {
                 gumballM.setState(gumballM.getNoQuarterState());
             } else {
