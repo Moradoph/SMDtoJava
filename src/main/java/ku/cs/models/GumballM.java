@@ -13,6 +13,7 @@ public class GumballM {
     State noQuarterState;
     State hasQuarterState;
     State soldState;
+    State winnerState;
 
     State state = soldOutState;
 
@@ -21,6 +22,7 @@ public class GumballM {
         noQuarterState = new NoQuarterState(this);
         hasQuarterState = new HasQuarterState(this);
         soldState = new SoldState(this);
+        winnerState = new WinnerState(this);
 
         this.gumball = numberGumball;
         if (gumball > 0) {
@@ -83,6 +85,10 @@ public class GumballM {
 
     public State getSoldState() {
         return soldState;
+    }
+
+    public State getWinnerState() {
+        return winnerState;
     }
 
     public State getState() {

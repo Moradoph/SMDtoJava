@@ -5,8 +5,10 @@
 
 package ku.cs.models;
 
-public class HasQuarterState implements State{
+import java.util.Random;
 
+public class HasQuarterState implements State{
+    Random randomWinner = new Random(System.currentTimeMillis());
     GumballM gumballM;
 
     public HasQuarterState(GumballM gumballM) {
@@ -22,7 +24,12 @@ public class HasQuarterState implements State{
     }
     public void turnCrank() {
         System.out.println("You turned...");
-        gumballM.setState(gumballM.getSoldState());
+        int winner = randomWinner.nextInt(10);
+        if ((winner == 0) && (gumballM.getGumball() > 1)) {
+            gumballM.setState(gumballM.getWinnerState());
+        } else {
+            gumballM.setState(gumballM.getSoldState());
+        }
     }
     public void dispense() {
         System.out.println("No gumball dispensed");
