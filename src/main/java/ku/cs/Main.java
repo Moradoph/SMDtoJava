@@ -13,30 +13,25 @@ public class Main {
         machine.log();
         machine.insertQuarter();
         machine.turnCrank();
-        machine.dispenseGumball();
 
         machine.log();
         machine.insertQuarter();
-        machine.ejectsQuarter();
-        machine.turnCrank();
-
-        machine.log();
-        machine.insertQuarter();
-        machine.turnCrank();
-        machine.dispenseGumball();
-        machine.insertQuarter();
-        machine.turnCrank();
-        machine.dispenseGumball();
+        machine.ejectQuarter();
         machine.turnCrank();
 
         machine.log();
         machine.insertQuarter();
+        machine.turnCrank();
         machine.insertQuarter();
         machine.turnCrank();
-        machine.dispenseGumball();
+        machine.turnCrank();
+
+        machine.log();
+        machine.insertQuarter();
         machine.insertQuarter();
         machine.turnCrank();
-        machine.dispenseGumball();
+        machine.insertQuarter();
+        machine.turnCrank();
         machine.insertQuarter();
         machine.turnCrank();
 

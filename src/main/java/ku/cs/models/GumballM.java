@@ -6,66 +6,49 @@
 package ku.cs.models;
 
 public class GumballM {
-    private int gumball;
-    private int quarter;
-    private int noQuarter = 0;
-    private int hasQuarter = 1;
-    private int gumballSold = 2;
-    private int outOfGumball = 3;
-    private int currentState = noQuarter;
 
-    public GumballM(int gumball) {
-        this.gumball = gumball;
-        this.quarter = 0;
+    private int gumball;
+
+    State soldOutState;
+    State noQuarterState;
+    State hasQuarterState;
+    State soldState;
+
+    State state = soldOutState;
+
+    public GumballM(int numberGumball) {
+        soldOutState = new SoldOutState(this);
+        noQuarterState = new NoQuarterState(this);
+        hasQuarterState = new HasQuarterState(this);
+        soldState = new SoldState(this);
+
+        this.gumball = numberGumball;
+        if (gumball > 0) {
+            state = noQuarterState;
+        }
     }
 
     public void insertQuarter() {
-        if (this.gumball == 0) {
-            System.out.println("You can't insert a quarter, the machine is sold out");
-        } else if (currentState == noQuarter) {
-            System.out.println("You inserted a quarter");
-            this.quarter += 1;
-            currentState = hasQuarter;
-        } else if (currentState == hasQuarter) {
-            System.out.println("You can't insert another quarter");
-        }
+        state.insertQuarter();
     }
 
-
-    public void ejectsQuarter() {
-        if (currentState == hasQuarter) {
-            System.out.println("Quarter returned");
-            this.quarter -= 1;
-            currentState = noQuarter;
-        }
+    public void ejectQuarter() {
+        state.ejectQuarter();
     }
 
     public void turnCrank() {
-        if (currentState == hasQuarter) {
-            System.out.println("You turned...");
-            this.quarter -= 1;
-            currentState = gumballSold;
-        } else {
-            if (currentState == noQuarter) {
-                System.out.println("You turned but there's no quarter");
-            }
-            if (currentState == outOfGumball) {
-                System.out.println("You turned, but there are no gumball");
-            }
-        }
+        state.turnCrank();
+        state.dispense();
     }
 
-    public void dispenseGumball() {
-        if (currentState == gumballSold) {
-            if (gumball > 0) {
-                System.out.println("A gumball comes rolling out the slot");
-                this.gumball -= 1;
-                currentState = noQuarter;
-                if (this.gumball == 0) {
-                    System.out.println("Oops, out of gumballs!");
-                    currentState = outOfGumball;
-                }
-            }
+    void setState(State state) {
+        this.state = state;
+    }
+
+    void releaseBall() {
+        System.out.println("A gumball comes rolling out the slot...");
+        if (gumball != 0) {
+            gumball = gumball - 1;
         }
     }
 
@@ -81,8 +64,80 @@ public class GumballM {
         }
         System.out.println();
     }
+
     public int getGumball() {
         return this.gumball;
     }
+
+    public State getNoQuarterState() {
+        return noQuarterState;
+    }
+
+    public State getSoldOutState() {
+        return soldOutState;
+    }
+
+    public State getHasQuarterState() {
+        return hasQuarterState;
+    }
+
+    public State getSoldState() {
+        return soldState;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+//    public void insertQuarter() {
+//        if (this.gumball == 0) {
+//            System.out.println("You can't insert a quarter, the machine is sold out");
+//        } else if (currentState == noQuarter) {
+//            System.out.println("You inserted a quarter");
+//            this.quarter += 1;
+//            currentState = hasQuarter;
+//        } else if (currentState == hasQuarter) {
+//            System.out.println("You can't insert another quarter");
+//        }
+//    }
+//
+//
+//    public void ejectsQuarter() {
+//        if (currentState == hasQuarter) {
+//            System.out.println("Quarter returned");
+//            this.quarter -= 1;
+//            currentState = noQuarter;
+//        }
+//    }
+//
+//    public void turnCrank() {
+//        if (currentState == hasQuarter) {
+//            System.out.println("You turned...");
+//            this.quarter -= 1;
+//            currentState = gumballSold;
+//        } else {
+//            if (currentState == noQuarter) {
+//                System.out.println("You turned but there's no quarter");
+//            }
+//            if (currentState == outOfGumball) {
+//                System.out.println("You turned, but there are no gumball");
+//            }
+//        }
+//    }
+//
+//    public void dispenseGumball() {
+//        if (currentState == gumballSold) {
+//            if (gumball > 0) {
+//                System.out.println("A gumball comes rolling out the slot");
+//                this.gumball -= 1;
+//                currentState = noQuarter;
+//                if (this.gumball == 0) {
+//                    System.out.println("Oops, out of gumballs!");
+//                    currentState = outOfGumball;
+//                }
+//            }
+//        }
+//    }
+
 }
 
